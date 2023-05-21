@@ -1,6 +1,6 @@
 FROM python:3.9
 
-# Установка зависимостей X-сервера
+# Установка зависимостей для xvfb
 RUN apt-get update && apt-get install -yq \
     curl \
     gpg \
@@ -28,17 +28,17 @@ RUN pip install playwright
 # Установка Сhromium
 RUN playwright install chromium
 
-# Копирование кода приложения
+# Копирование файлов
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY app.log .
 COPY . .
 
-# Установка и запуск X-сервера
+# Установка и запуск xvfb
 RUN apt-get update && apt-get install -yq \
     xvfb
 ENV DISPLAY=:99
 
-# Запуск X-сервера и приложения
+# Запуск xvfb и приложения
 CMD xvfb-run --server-args="-screen 0 1024x768x24" python app.py

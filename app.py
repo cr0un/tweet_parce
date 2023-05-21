@@ -6,9 +6,11 @@ import requests
 import json
 import logging
 
+
 # Запись логов (по умолчанию в контейнер)
 logging.basicConfig(level=logging.INFO)
 # logging.basicConfig(filename='app.log', level=logging.INFO) # можно направить в файл
+
 
 # Бот телеграм
 chat_id = 'chat_id'
@@ -98,6 +100,7 @@ with sync_playwright() as pw:
     processed_urls = load_processed_urls()
 
     while True:
+        # Указываем источники с твитами
         tweets1 = scrape_tweets("https://twitter.com/binance", page1)
         tweets2 = scrape_tweets("https://twitter.com/krakenfx", page2)
         tweets3 = scrape_tweets("https://twitter.com/bitfinex", page3)
